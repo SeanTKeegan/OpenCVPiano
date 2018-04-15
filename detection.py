@@ -8,6 +8,9 @@ class Detection(object):
     def __init__(self, image):
         self.previous_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+    def __del__(self):
+        print "detection deleted"
+
     def get_active_cell(self, image):
         # obtain motion between previous and current image
         current_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
