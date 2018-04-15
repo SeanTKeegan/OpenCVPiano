@@ -1,8 +1,8 @@
+import cv2, time, sound, os
 from webcam import Webcam
 from detection import Detection
-#import winsound
 
-# musical notes (C, D, E, F, G, A, B)
+# musical notes (C, D, E, F, G, A, B) -> one octave
 NOTES = [262, 294, 330, 350, 393, 441, 494]
 
 # initialise webcam and start thread
@@ -27,8 +27,21 @@ while True:
 
     # if switch on, play note
     if switch:
-        #winsound.Beep(NOTES[cell], 1000)
-        print NOTES[cell]
+
+        sound.playTone(0.5,44100,1.0,NOTES[cell])
+        # print NOTES[cell]
 
     # alternate switch
     switch = not switch
+
+    # 'q' to quit (currently working on this - not working yet)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+del detection
+del webcam
+cv2.destroyAllWindows()
+os._exit(0)
+
+
+
