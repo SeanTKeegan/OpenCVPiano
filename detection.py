@@ -20,10 +20,11 @@ class Detection(object):
         delta = cv2.absdiff(self.previous_gray, current_gray)
         threshold_image = cv2.threshold(delta, 25, 255, cv2.THRESH_BINARY)[1]
 
-        # debug
-        cv2.imshow('OpenCV Detection', image)
-        cv2.waitKey(10)
+        # image2 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        
 
+        # debug
+        
         # store current image
         self.previous_gray = current_gray
 
@@ -41,6 +42,20 @@ class Detection(object):
         cells[4] = cv2.countNonZero(threshold_image[0:height, cell_width*4:cell_width*5])
         cells[5] = cv2.countNonZero(threshold_image[0:height, cell_width*5:cell_width*6])
         cells[6] = cv2.countNonZero(threshold_image[0:height, cell_width*6:width])
+
+        # visual black & white 'piano keys'
+        image[0:height, 0:cell_width] = (0,0,0)
+        image[0:height, cell_width:cell_width*2] = (225,225,225)
+        image[0:height, cell_width*2:cell_width*3] = (0,0,0)
+        image[0:height, cell_width*3:cell_width*4] = (225,225,225)
+        image[0:height, cell_width*4:cell_width*5] = (0,0,0)
+        image[0:height, cell_width*5:cell_width*6] = (225,225,225)
+        image[0:height, cell_width*6:width] = (0,0,0)
+
+
+        cv2.imshow('OpenCV Detection', image)
+        cv2.waitKey(10)
+
         
         # check if hit and change the text
         checkCell = cv2.countNonZero(threshold_image[0:50, 0:cell_width])
