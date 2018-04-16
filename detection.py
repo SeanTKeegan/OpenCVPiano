@@ -1,4 +1,4 @@
-import cv2
+import cv2, os
 import numpy as np
 
 
@@ -19,11 +19,6 @@ class Detection(object):
         current_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         delta = cv2.absdiff(self.previous_gray, current_gray)
         threshold_image = cv2.threshold(delta, 25, 255, cv2.THRESH_BINARY)[1]
-
-        # image2 = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        
-
-        # debug
         
         # store current image
         self.previous_gray = current_gray
@@ -52,24 +47,31 @@ class Detection(object):
         image[0:height, cell_width*5:cell_width*6] = (225,225,225)
         image[0:height, cell_width*6:width] = (0,0,0)
 
+        buttonColour = (225,225,225)
+
+    
+        # round button
+        cv2.circle(image,(cell_width/4,(height*2)-(height/4)), cell_width/4, buttonColour, -1)
+        # actual area checked if touched for button -> comment in for degugging
+        # image[(height+(height/2)):height*2, 0:cell_width/2] = colourOff
+
 
         cv2.imshow('OpenCV Detection', image)
         cv2.waitKey(10)
 
         
-        # check if hit and change the text
-        checkCell = cv2.countNonZero(threshold_image[0:50, 0:cell_width])
+        # actual area checked if touched for button
+        checkCell = cv2.countNonZero(threshold_image[(height+(height/2)):height*2, 0:cell_width/2])
 
+        # toggle between 'ON' & 'OFF'
         if(checkCell >= self.THRESHOLD):
             webcam.toggle = not webcam.toggle
             
-        
         if (webcam.toggle):
-            webcam.makeBlue()
+            webcam.turnOn((cell_width/4)-20,(height*2)+10)
         else:
-            webcam.makeRed()
-
-            
+            webcam.turnOff((cell_width/4)-20,(height*2)+10)
+  
 
         # obtain the most active cell
         top_cell =  np.argmax(cells)

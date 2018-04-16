@@ -32,11 +32,11 @@ class Webcam:
     def get_current_frame(self):
         return self.current_frame
 
-    def makeBlue(self):
-        cv2.putText(self.current_frame, 'Button: Toggle Me', (50, 50), cv2.FONT_ITALIC, 0.8, (0,255,255))
+    def turnOn(self,height,width):
+        cv2.putText(self.current_frame, 'ON', (height,width), cv2.FONT_ITALIC, 0.8, (0,255,255))
 
-    def makeRed(self):
-        cv2.putText(self.current_frame, 'Button: I have Toggled', (50, 50), cv2.FONT_ITALIC, 0.8,(0,255,255))
+    def turnOff(self,height,width):
+        cv2.putText(self.current_frame, 'OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
    
 
 
