@@ -22,22 +22,22 @@ while True:
     image = webcam.get_current_frame()
 
     # use motion detection to get active cell
-    cell = detection.get_active_cell(image)
+    cell = detection.get_active_cell(image,webcam)
     if cell == None: continue
 
     # if switch on, play note
     if switch:
 
-        sound.playTone(0.5,44100,1.0,NOTES[cell])
-        # print NOTES[cell]
+        sound.playTone(0.5,44100,1,NOTES[cell])
 
     # alternate switch
     switch = not switch
 
-    # 'q' to quit (currently working on this - not working yet)
+    # 'q' to quit 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+# close app
 del detection
 del webcam
 cv2.destroyAllWindows()

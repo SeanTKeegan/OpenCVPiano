@@ -1,9 +1,11 @@
 import cv2
 import numpy as np
 
+
 class Detection(object):
 
     THRESHOLD = 1500
+
 
     def __init__(self, image):
         self.previous_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -11,7 +13,8 @@ class Detection(object):
     def __del__(self):
         print "detection deleted"
 
-    def get_active_cell(self, image):
+    def get_active_cell(self, image, webcam):
+
         # obtain motion between previous and current image
         current_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         delta = cv2.absdiff(self.previous_gray, current_gray)
@@ -26,6 +29,7 @@ class Detection(object):
 
         # set cell width
         height, width = threshold_image.shape[:2]
+        height = height / 3
         cell_width = width/7
 
         # store motion level for each cell
@@ -37,6 +41,20 @@ class Detection(object):
         cells[4] = cv2.countNonZero(threshold_image[0:height, cell_width*4:cell_width*5])
         cells[5] = cv2.countNonZero(threshold_image[0:height, cell_width*5:cell_width*6])
         cells[6] = cv2.countNonZero(threshold_image[0:height, cell_width*6:width])
+        
+        # check if hit and change the text
+        checkCell = cv2.countNonZero(threshold_image[0:50, 0:cell_width])
+
+        if(checkCell >= self.THRESHOLD):
+            webcam.toggle = not webcam.toggle
+            
+        
+        if (webcam.toggle):
+            webcam.makeBlue()
+        else:
+            webcam.makeRed()
+
+            
 
         # obtain the most active cell
         top_cell =  np.argmax(cells)
