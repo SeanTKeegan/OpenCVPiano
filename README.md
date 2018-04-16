@@ -14,7 +14,7 @@ Simply run `main.py`. Stay very still when you run it :guardsman: and move slowl
 # installing pyaudio with pip and brew
 
 brew install portaudio
-sudo brew link portaudio
+brew link portaudio
 pip install pyaudio
 
 ```
