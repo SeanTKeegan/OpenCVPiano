@@ -18,6 +18,11 @@ switch = True
 
 while True:
 
+    if(webcam.toggle):
+        duration = 2
+    else:
+        duration = 0.5
+
     # get current frame from webcam
     image = webcam.get_current_frame()
 
@@ -28,12 +33,12 @@ while True:
     # if switch on, play note
     if switch:
 
-        sound.playTone(0.5,44100,1,NOTES[cell])
+        sound.playTone(0.5,44100,duration,NOTES[cell])
 
     # alternate switch
     switch = not switch
 
-    # 'q' to quit 
+    # 'q' to quit
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
@@ -42,6 +47,3 @@ del detection
 del webcam
 cv2.destroyAllWindows()
 os._exit(0)
-
-
-
