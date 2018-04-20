@@ -3,7 +3,8 @@ from threading import Thread
 
 class Webcam:
 
-    toggle = True
+    toggleDuration = True
+    toggleFreq = True
 
     def __init__(self):
         self.video_capture = cv2.VideoCapture(0)
@@ -33,11 +34,20 @@ class Webcam:
         return self.current_frame
 
     def turnOn(self,height,width):
-        cv2.putText(self.current_frame, 'ON', (height,width), cv2.FONT_ITALIC, 0.8, (0,255,255))
+        cv2.putText(self.current_frame, 'SUSTAIN ON', (height,width), cv2.FONT_ITALIC, 0.8, (0,255,255))
 
     def turnOff(self,height,width):
-        cv2.putText(self.current_frame, 'OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
+        cv2.putText(self.current_frame, 'SUSTAIN OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
+    
+    def switchTextOn(self,height,width):
+        cv2.putText(self.current_frame, 'SUSTAIN ON', (height,width), cv2.FONT_ITALIC, 0.8, (0,255,255))
+
+    def switchTextOff(self,height,width):
+        cv2.putText(self.current_frame, 'SUSTAIN OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
    
+
+
+  
 
 
 

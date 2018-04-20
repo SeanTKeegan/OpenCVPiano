@@ -8,6 +8,7 @@ NOTES = [262, 294, 330, 350, 393, 441, 494]
 # initialise webcam and start thread
 webcam = Webcam()
 webcam.start()
+factor = 1
 
 # initialise detection with first webcam frame
 image = webcam.get_current_frame()
@@ -18,10 +19,17 @@ switch = True
 
 while True:
 
-    if(webcam.toggle):
+    if(webcam.toggleDuration):
         duration = 2
+        # factor = 2
     else:
         duration = 0.5
+        # factor = 1
+
+    if(webcam.toggleFreq):
+        factor = 1
+    else:
+        factor = 4
 
     # get current frame from webcam
     image = webcam.get_current_frame()
@@ -33,7 +41,7 @@ while True:
     # if switch on, play note
     if switch:
 
-        sound.playTone(0.5,44100,duration,NOTES[cell])
+        sound.playTone(0.5,44100,duration,NOTES[cell],factor)
 
     # alternate switch
     switch = not switch

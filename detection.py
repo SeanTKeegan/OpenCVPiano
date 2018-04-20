@@ -50,28 +50,42 @@ class Detection(object):
         buttonColour = (225,225,225)
 
     
-        # round button
+        # round duration button
         cv2.circle(image,(cell_width/4,(height*2)-(height/4)), cell_width/4, buttonColour, -1)
         # actual area checked if touched for button -> comment in for degugging
-        # image[(height+(height/2)):height*2, 0:cell_width/2] = colourOff
+        # image[(height+(height/2)):height*2, 0:cell_width/2] = (225,0,225)
 
+        # round frequency button
+        cv2.circle(image,(cell_width/4,(height*2)+(height/4)), cell_width/4, (0,225,225), -1)
+        # image[height*2+10:height*2+(height/2), 0:cell_width/2] = (225,225,225)
 
         cv2.imshow('OpenCV Detection', image)
         cv2.waitKey(10)
 
         
         # actual area checked if touched for button
-        checkCell = cv2.countNonZero(threshold_image[(height+(height/2)):height*2, 0:cell_width/2])
+        checkDurationCell = cv2.countNonZero(threshold_image[(height+(height/2)):height*2, 0:cell_width/2])
+        checkFreqCell = cv2.countNonZero(threshold_image[height*2:height*2+(height/2), 0:cell_width/2])
 
-        # toggle between 'ON' & 'OFF'
-        if(checkCell >= self.THRESHOLD):
-            webcam.toggle = not webcam.toggle
+        # toggle duration between 'ON' & 'OFF'
+        if(checkDurationCell >= self.THRESHOLD):
+            webcam.toggleDuration = not webcam.toggleDuration
             
-        if (webcam.toggle):
+        if (webcam.toggleDuration):
             webcam.turnOn((cell_width/4)-20,(height*2)+10)
         else:
             webcam.turnOff((cell_width/4)-20,(height*2)+10)
+        
+        # toggle freq between 'ON' & 'OFF'
+        if(checkFreqCell >= self.THRESHOLD):
+            webcam.toggleFreq = not webcam.toggleFreq
+            
+        # if (webcam.toggleDuration):
+        #     webcam.switchTextOn((cell_width/4)-20,(height*2)+10)
+        # else:
+        #     webcam.switchTextOff((cell_width/4)-20,(height*2)+10)
   
+
 
         # obtain the most active cell
         top_cell =  np.argmax(cells)
