@@ -2,10 +2,12 @@ import cv2, time, sound, os
 from webcam import Webcam
 from detection import Detection
 
+
 # musical notes (C, D, E, F, G, A, B) -> one octave
 NOTES = [262, 294, 330, 350, 393, 441, 494]
 
 # initialise webcam and start thread
+
 webcam = Webcam()
 webcam.start()
 factor = 1
@@ -35,13 +37,13 @@ while True:
     image = webcam.get_current_frame()
 
     # use motion detection to get active cell
+    
     cell = detection.get_active_cell(image,webcam)
     if cell == None: continue
 
     # if switch on, play note
     if switch:
-
-        sound.playTone(0.5,44100,duration,NOTES[cell],factor)
+            sound.playTone(0.5,44100,duration,NOTES[cell],factor)
 
     # alternate switch
     switch = not switch

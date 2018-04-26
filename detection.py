@@ -1,5 +1,6 @@
-import cv2, os
+import cv2, os, time
 import numpy as np
+
 
 
 class Detection(object):
@@ -8,6 +9,7 @@ class Detection(object):
 
 
     def __init__(self, image):
+        self.previousTime = 0
         self.previous_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     def __del__(self):
@@ -62,14 +64,14 @@ class Detection(object):
         cv2.imshow('OpenCV Detection', image)
         cv2.waitKey(10)
 
-        
-        # actual area checked if touched for button
+        # # actual area checked if touched for button
         checkDurationCell = cv2.countNonZero(threshold_image[(height+(height/2)):height*2, 0:cell_width/2])
         checkFreqCell = cv2.countNonZero(threshold_image[height*2:height*2+(height/2), 0:cell_width/2])
 
         # toggle duration between 'ON' & 'OFF'
-        if(checkDurationCell >= self.THRESHOLD):
+        if(checkDurationCell >= self.THRESHOLD and time.time() - self.previousTime >= 2):
             webcam.toggleDuration = not webcam.toggleDuration
+            self.previousTime = time.time()
             
         if (webcam.toggleDuration):
             webcam.turnOn((cell_width/4)-20,(height*2)+10)
@@ -77,8 +79,9 @@ class Detection(object):
             webcam.turnOff((cell_width/4)-20,(height*2)+10)
         
         # toggle freq between 'ON' & 'OFF'
-        if(checkFreqCell >= self.THRESHOLD):
+        if(checkFreqCell >= self.THRESHOLD and time.time() - self.previousTime >= 2):
             webcam.toggleFreq = not webcam.toggleFreq
+            self.previousTime = time.time()
             
         # if (webcam.toggleDuration):
         #     webcam.switchTextOn((cell_width/4)-20,(height*2)+10)

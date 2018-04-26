@@ -1,9 +1,18 @@
 import pyaudio
 import numpy as np
+import time
+from threading import Thread
 
 samplesOfNote = [] # global variable for the samples of chosen note
 
+# create thread for capturing images
+# def start():
+#     audioThread.start()
+#     audioThread.setDaemon = True
+
 def playTone(volume,sampleRate,duration,freq,factor):
+	# audioThread = Thread()
+	# audioThread.start()
 
 	p = pyaudio.PyAudio()
 
@@ -30,6 +39,8 @@ def playTone(volume,sampleRate,duration,freq,factor):
 	stream.close()
 
 	p.terminate()
+	# audioThread.setDaemon = False
+
 
 def speedxFactor(sound_array, factor):
     # Changes the frequency - in turn changing the pitch of the note & duration (speed changes)
