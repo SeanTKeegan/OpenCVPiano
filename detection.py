@@ -6,16 +6,21 @@ import numpy as np
 class Detection(object):
 
     THRESHOLD = 1500
+    
 
 
     def __init__(self, image):
         self.previousTime = 0
         self.previous_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        self.num = 3
 
     def __del__(self):
         print "detection deleted"
 
     def get_active_cell(self, image, webcam):
+
+        if(self.num == 0):
+            self.num = 1
 
         # obtain motion between previous and current image
         current_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -61,12 +66,22 @@ class Detection(object):
         cv2.circle(image,(cell_width/4,(height*2)+(height/4)), cell_width/4, (0,225,225), -1)
         # image[height*2+10:height*2+(height/2), 0:cell_width/2] = (225,225,225)
 
+
+        # trigger number to go up
+        image[height+(height/2)+10:height*2-(height/8), cell_width*7-cell_width/2:cell_width*7] = (225,225,225)
+
+        # trigger number to go down
+        image[height*2+10:height*2+(height/3)+10, cell_width*7-cell_width/2:cell_width*7] = (225,225,225)
+
+        
         cv2.imshow('OpenCV Detection', image)
         cv2.waitKey(10)
 
-        # # actual area checked if touched for button
+        # actual area checked if touched for button
         checkDurationCell = cv2.countNonZero(threshold_image[(height+(height/2)):height*2, 0:cell_width/2])
         checkFreqCell = cv2.countNonZero(threshold_image[height*2:height*2+(height/2), 0:cell_width/2])
+        checkUpArrow = cv2.countNonZero(threshold_image[height+(height/2)+10:height*2-(height/8), cell_width*7-cell_width/2:cell_width*7])
+        checkDownArrow = cv2.countNonZero(threshold_image[height*2+10:height*2+(height/3)+10, cell_width*7-cell_width/2:cell_width*7])
 
         # toggle duration between 'ON' & 'OFF'
         if(checkDurationCell >= self.THRESHOLD and time.time() - self.previousTime >= 2):
@@ -74,20 +89,33 @@ class Detection(object):
             self.previousTime = time.time()
             
         if (webcam.toggleDuration):
-            webcam.turnOn((cell_width/4)-20,(height*2)+10)
+            webcam.turnOn((cell_width/4)-40,(height*2)+10)
         else:
-            webcam.turnOff((cell_width/4)-20,(height*2)+10)
+            webcam.turnOff((cell_width/4)-40,(height*2)+10)
         
         # toggle freq between 'ON' & 'OFF'
         if(checkFreqCell >= self.THRESHOLD and time.time() - self.previousTime >= 2):
             webcam.toggleFreq = not webcam.toggleFreq
             self.previousTime = time.time()
             
-        if (webcam.toggleDuration):
-            webcam.switchTextOn((cell_width/4)-20,(height*2)+(height/2)+10)
+        if (webcam.toggleFreq):
+            webcam.switchTextOn((cell_width/4)-40,(height*2)+(height/2)+10)
         else:
-            webcam.switchTextOff((cell_width/4)-20,(height*2)+(height/2)+10)
-  
+            webcam.switchTextOff((cell_width/4)-40,(height*2)+(height/2)+10)
+            self.num = 1
+        
+
+        # adjust freq number up and down
+        if(checkUpArrow >= self.THRESHOLD and time.time() - self.previousTime >= 2):
+            self.num += 1
+            self.previousTime = time.time()
+
+        if(checkDownArrow >= self.THRESHOLD and time.time() - self.previousTime >= 2):
+            self.num -= 1
+            self.previousTime = time.time()
+
+        # write the freq number to the screen
+        webcam.writeFreqNumber((cell_width*7)-(cell_width/4),(height*2),self.num)
 
 
         # obtain the most active cell
