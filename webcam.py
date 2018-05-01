@@ -40,10 +40,10 @@ class Webcam:
         cv2.putText(self.current_frame, 'SUSTAIN OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
     
     def switchTextOn(self,height,width):
-        cv2.putText(self.current_frame, 'SUSTAIN ON', (height,width), cv2.FONT_ITALIC, 0.8, (0,255,255))
+        cv2.putText(self.current_frame, 'PITCH ON', (height,width), cv2.FONT_ITALIC, 0.8, (0,255,255))
 
     def switchTextOff(self,height,width):
-        cv2.putText(self.current_frame, 'SUSTAIN OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
+        cv2.putText(self.current_frame, 'PITCH OFF', (height,width), cv2.FONT_ITALIC, 0.8,(0,255,255))
    
 
 

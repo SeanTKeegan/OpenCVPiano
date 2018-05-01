@@ -83,10 +83,10 @@ class Detection(object):
             webcam.toggleFreq = not webcam.toggleFreq
             self.previousTime = time.time()
             
-        # if (webcam.toggleDuration):
-        #     webcam.switchTextOn((cell_width/4)-20,(height*2)+10)
-        # else:
-        #     webcam.switchTextOff((cell_width/4)-20,(height*2)+10)
+        if (webcam.toggleDuration):
+            webcam.switchTextOn((cell_width/4)-20,(height*2)+(height/2)+10)
+        else:
+            webcam.switchTextOff((cell_width/4)-20,(height*2)+(height/2)+10)
   
 
 
