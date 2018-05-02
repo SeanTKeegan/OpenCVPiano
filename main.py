@@ -1,3 +1,4 @@
+import sys
 import cv2, time, sound, os
 from webcam import Webcam
 from detection import Detection
@@ -11,6 +12,17 @@ NOTES = [262, 294, 330, 350, 393, 441, 494]
 webcam = Webcam()
 webcam.start()
 # factor = 1
+
+#initialise type of wave
+param = (sys.argv)
+wave = 'sine'
+if len(param) == 1:
+    wave = 'sine'
+    print 'Playing with: sine wave'
+elif len(param) == 2:
+    wave = param[1]
+    print 'Playing with: ',param[1], ' wave'
+
 
 # initialise detection with first webcam frame
 image = webcam.get_current_frame()
@@ -37,13 +49,13 @@ while True:
     image = webcam.get_current_frame()
 
     # use motion detection to get active cell
-    
+
     cell = detection.get_active_cell(image,webcam)
     if cell == None: continue
 
     # if switch on, play note
     if switch:
-            sound.playTone(0.5,44100,duration,NOTES[cell],detection.num)
+            sound.playTone(0.5,44100,duration,NOTES[cell],detection.num, wave)
 
     # alternate switch
     switch = not switch

@@ -10,7 +10,7 @@ samplesOfNote = [] # global variable for the samples of chosen note
 #     audioThread.start()
 #     audioThread.setDaemon = True
 
-def playTone(volume,sampleRate,duration,freq,factor):
+def playTone(volume,sampleRate,duration,freq,factor,wave):
 	# audioThread = Thread()
 	# audioThread.start()
 
@@ -21,7 +21,12 @@ def playTone(volume,sampleRate,duration,freq,factor):
 	f = freq         # sine frequency
 
 	# generate samples, note conversion to float32 array
-	samples = (np.sin(2*np.pi*np.arange(fs*duration)*f/fs)).astype(np.float32)
+	if wave == 'saw':
+		samples = (2 * (np.arange(fs*duration) * (f/fs) % 1) -1).astype(np.float32)
+	#elif wave == "square":
+		#samples = (np.power((-1),(np.floor(2 * (fs*duration) * (f/fs))))).astype(np.float32)
+	else:
+		samples = (np.sin(2*np.pi*np.arange(fs*duration)*f/fs)).astype(np.float32)
 
 	samplesOfNote = samples
 	# print samplesOfNote.shape
@@ -44,11 +49,11 @@ def playTone(volume,sampleRate,duration,freq,factor):
 
 def speedxFactor(sound_array, factor):
     # Changes the frequency - in turn changing the pitch of the note & duration (speed changes)
-   
+
     # if the factor is 2, indices will get half the samples of the original sound
     # eg sound_array = 88200 & indices = 44100
     indices = np.round(np.arange(0, len(sound_array), factor))
     indices = indices[indices < len(sound_array)].astype(int)
-    
+
     # return the smaller array of samples
     return sound_array[indices.astype(int)]
