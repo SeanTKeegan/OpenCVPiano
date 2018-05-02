@@ -74,7 +74,7 @@ class Detection(object):
         image[height*2+10:height*2+(height/3)+10, cell_width*7-cell_width/2:cell_width*7] = (225,225,225)
 
         
-        cv2.imshow('OpenCV Detection', image)
+        cv2.imshow('OpenCVPiano', image)
         cv2.waitKey(10)
 
         # actual area checked if touched for button
