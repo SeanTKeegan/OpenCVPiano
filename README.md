@@ -19,6 +19,8 @@ pip install pyaudio
 
 ```
 
+![OpenCVPiano](media/Screenshot-of-OpenCVPiano.png)
+
 ## How to Interact
 
 * stuff about sawtooth selection here
