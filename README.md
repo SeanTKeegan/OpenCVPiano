@@ -19,5 +19,19 @@ pip install pyaudio
 
 ```
 
+## How to Interact
+
+* stuff about sawtooth selection here
+* stuff about the UI 
+  * keyboard
+  * buttons
+  * user selecting freq (and how to)
+
+
+## How it Works
+
+
+
+
 
 
