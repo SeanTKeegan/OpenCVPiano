@@ -31,7 +31,7 @@ pip install pyaudio
 **The buttons can be interacted with in the same way as with the keyboard at the top of the screen.** 
 
 #### Sustain Button:
-This button controls the duration at which each note is played. This can be toggled on and off by hitting it with your hand.
+This button controls the duration that each note is played. This can be toggled on and off by hitting it with your hand.
 
 #### Pitch Button & Up/Down Buttons:
 By default the frequency of the note is 1. This corresponds to the keys at the top of the screen - starting on middle C. By raising this number to 2, the user can change the octave of the corresponding note on the keyboard.
@@ -43,6 +43,43 @@ The frequency value resets to the default value of 1 by 'turning off' the pitch.
 
 
 ## How it Works
+
+#### Camera:
+
+#### Keyboard:
+
+
+#### Buttons:
+Detection for button clicks is the same as that for the keyboard keys. Each button however, has a little extra functionality to allow for smooth interaction.
+
+```python
+
+# adjust freq number up and down
+    if(checkUpArrow >= self.THRESHOLD and time.time() - self.previousTime >= 2):
+        self.num += 1
+        self.previousTime = time.time()
+
+```
+
+The if statement in the above code checks if the difference between that specific area of the screen is substantially different than that of the same area one frame previous (i.e. each frame from the live camera feed is differenced). This check is also done for each of the piano keys. 
+
+The if statement also checks if the current timestamp is at least 2 more seconds than the last button click. This check was introduced to ensure that the button would "click" once, and not a multiple of times when a user tries to hit in once.
+
+When both of these conditions are met, the frequency number is updated; in this case incremented. It was important that the frequency number belongs to the detection class. This is so the variable can be statically updated. The timestamp is also recorded for the next check.
+
+
+```python
+
+# toggle duration between 'ON' & 'OFF'
+if(checkDurationCell >= self.THRESHOLD and time.time() - self.previousTime >= 2):
+    webcam.toggleDuration = not webcam.toggleDuration
+    self.previousTime = time.time()
+            
+```
+
+The code for toggling on and off the duration functionality has the same conditions as the previous code, however the code inside the if statement is slightly different. If the duration is "on" it will be turned "off" and vice-versa. Again the timestamp is recorded. This allows for the user to be able to toggle on and off this option.
+
+
 
 
 
