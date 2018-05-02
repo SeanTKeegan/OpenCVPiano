@@ -40,11 +40,6 @@ while True:
         duration = 0.5
         # factor = 1
 
-    # if(webcam.toggleFreq):
-    #     factor = 1
-    # else:
-    #     factor = 4
-
     # get current frame from webcam
     image = webcam.get_current_frame()
 

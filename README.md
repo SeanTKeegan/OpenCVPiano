@@ -44,9 +44,46 @@ The frequency value resets to the default value of 1 by 'turning off' the pitch.
 
 ## How it Works
 
-#### Camera:
-
 #### Keyboard:
+An array stores the dimensions of each of the keyboard keys. Black and white pixels are drawn over the area of each respective key into the camera feed image. In order to detect if a key has been hit, the application subtracts each frame from the previous and checks for a substantial difference (in accordance to some threshold).
+
+The key with the most activity is returned. This can now be used to trigger the correct auditory response.
+
+```python
+
+# store motion level for each cell
+cells = np.array([0, 0, 0, 0, 0, 0, 0]
+
+# ...
+
+# visual black & white 'piano keys'
+image[0:height, 0:cell_width] = (0,0,0)
+
+# ...
+
+# obtain the most active cell
+top_cell =  np.argmax(cells)
+
+# return the most active cell, if threshold met
+if(cells[top_cell] >= self.THRESHOLD):
+    return top_cell
+else:
+    return None
+
+```
+
+In the main, once the information has been received about which key has been hit, the correct sound can be triggered. The camera feed continues if nothing has been hit.
+
+```python
+
+# if switch on, play note
+if switch:
+        sound.playTone(0.5,44100,duration,NOTES[cell],detection.num, wave)
+
+# alternate switch
+switch = not switch
+
+```
 
 
 #### Buttons:
@@ -65,7 +102,7 @@ The if statement in the above code checks if the difference between that specifi
 
 The if statement also checks if the current timestamp is at least 2 more seconds than the last button click. This check was introduced to ensure that the button would "click" once, and not a multiple of times when a user tries to hit in once.
 
-When both of these conditions are met, the frequency number is updated; in this case incremented. It was important that the frequency number belongs to the detection class. This is so the variable can be statically updated. The timestamp is also recorded for the next check.
+When both of these conditions are met, the frequency number is updated; in this case incremented. It is important that the frequency number belongs to the detection class. This is so the variable can be statically updated. The timestamp is also recorded for the next check.
 
 
 ```python
@@ -80,7 +117,7 @@ if(checkDurationCell >= self.THRESHOLD and time.time() - self.previousTime >= 2)
 The code for toggling on and off the duration functionality has the same conditions as the previous code, however the code inside the if statement is slightly different. If the duration is "on" it will be turned "off" and vice-versa. Again the timestamp is recorded. This allows for the user to be able to toggle on and off this option.
 
 
-
+#### Sound
 
 
 
