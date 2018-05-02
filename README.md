@@ -23,9 +23,12 @@ pip install pyaudio
 
 ## How to Interact
 
-* stuff about sawtooth selection here
-* stuff about the UI 
-  * keyboard
+* stuff about sawtooth selection here (when starting main.py)
+
+#### Keyboard:
+Ensure that the camera is on a steady surface and the background is relatively static (any movement will trigger a detection). Stand in the center of the screen, with limbs a distance away from the keyboard at the top and buttons at the sides of the screen (there are no trigger points here).
+
+To trigger a note, raise your arm into the space of the desired note. The note will sound briefly. Should you wish for the note to play again simply wave your arm in place to trigger the motion detection.
 
 
 **The buttons can be interacted with in the same way as the keyboard at the top of the screen.** 
@@ -120,10 +123,31 @@ The code for toggling on and off the duration functionality has the same conditi
 #### Sound
 
 ```python
+def playTone(volume,sampleRate,duration,freq,factor,wave):
+
+# ...
 
 samples = (np.sin(2*np.pi*np.arange(fs*duration)*f/fs)).astype(np.float32)
 
 ```
+
+The above code demonstrates how what is needed to generate samples. Factors such as the sample rate and frequency have been passed to the method `playTone()`. The sample rate `fs` has been set at a constant 44100Hz. The frequency f can be altered by the user, along with note duration and th etype of wave to be generated.
+
+pyAudio allows for a stream to be opened. Within this stream samples can be generated in accordance with the previously set values for fs, f, volume etc. These sample values must be in range [-1.0, 1.0].
+
+```python
+
+def speedxFactor(sound_array, factor):
+
+# ...
+
+indices = np.round(np.arange(0, len(sound_array), factor))
+indices = indices[indices < len(sound_array)].astype(int)
+
+```
+`speedxFactor`'s parameters are controlled by the user. It is this function that allows for the frequency to be changed. Each sample is stored as part of an array. This array can then be iterated and altered by the `factor`. An example of this would be if `factor = 2` every second sample in the array would be stored into a new array of half the size. Because the nature of this the returned audio will be half the original speed.
+
+
 
 
 
