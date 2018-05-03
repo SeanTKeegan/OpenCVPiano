@@ -151,8 +151,6 @@ indices = indices[indices < len(sound_array)].astype(int)
 
 ### How Sound is Produced 
 
-Producing Sounds
-
 The application produces sound using the following formula:
 
 ![OpenCVPiano](media/sinewaveformula.png)
