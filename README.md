@@ -25,8 +25,6 @@ pip install pyaudio
 
 ## How to Interact
 
-* stuff about sawtooth selection here (when starting main.py)
-
 #### Keyboard:
 Ensure that the camera is on a steady surface and the background is relatively static (any movement will trigger a detection). Stand inline with the center of the screen, keeping limbs a distance away from both the keyboard and buttons (i.e. where there are no trigger points).
 
