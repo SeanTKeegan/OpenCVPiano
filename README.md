@@ -149,9 +149,33 @@ indices = indices[indices < len(sound_array)].astype(int)
 ```
 `speedxFactor`'s parameters are controlled by the user. It is this function that allows for the frequency to be changed. Each sample is stored as part of an array. This array can then be iterated and altered by the `factor`. An example of this would be if `factor = 2`, every second sample in the array would be stored into a new array of half the size. Because the nature of this, the returned audio will be half of the original speed.
 
+### How Sound is Produced 
+
+Producing Sounds
+
+The application produces sound using the following formula:
+
+![OpenCVPiano](media/sinewaveformula.png)
+
+This produces a sine wave and using the values contained in the `NOTES` array, creates the notes of the octave beginning with Middle C. These values relate to the frequency in Hertz of the wave, i.e. 262 Hz = Middle C
+
+The application can also produce Sawtooth waves using the following formula:
+
+![OpenCVPiano](media/sawtoothformula.png)
+
+The default wave generated is a sine wave. However to change the type of wave produced, simply type it as a parameter:
 
 
+```bash
 
+$/python main.py saw
+
+```
+
+
+The application aims to simulate a piano/keyboard as close as possible. To this end it includes the ability to sustain a note. In composition of piano music, sustaining a note is a accomplished by depressing a pedal at the base of the piano, releasing the dampeners on the strings and allowing them to vibrate freely until the pedal is released or the strings stop naturally. 
+
+In this program, sustaining a note is achieved by toggling the “Sustain” button. This is the equivalent of depressing and releasing the pedal and changes the amount of time the note is generated for.  
 
 
 
