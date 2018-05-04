@@ -5,6 +5,8 @@ This is an OpenCV application which plays a piano. Based on RDMilligan's https:/
 
 Simply run `main.py`. Stay very still when you run it :guardsman: and move slowly to see the output. :turtle:
 
+A screenrecording of the application running is available in the 'Media' folder.
+
 ## Required (Mac OS):
 
 * Python 2.7
