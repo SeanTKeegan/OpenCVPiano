@@ -120,7 +120,7 @@ if(checkDurationCell >= self.THRESHOLD and time.time() - self.previousTime >= 2)
 The code for toggling on and off the duration functionality has the same conditions as the previous code, however the code inside the if statement is slightly different. If the duration is 'on' it will be turned 'off' and vice-versa. Again the timestamp is recorded. This allows for the user to be able to toggle this option on and off .
 
 
-#### Sound
+#### Sound:
 
 ```python
 def playTone(volume,sampleRate,duration,freq,factor,wave):
@@ -147,7 +147,7 @@ indices = indices[indices < len(sound_array)].astype(int)
 ```
 `speedxFactor`'s parameters are controlled by the user. It is this function that allows for the frequency to be changed. Each sample is stored as part of an array. This array can then be iterated and altered by the `factor`. An example of this would be if `factor = 2`, every second sample in the array would be stored into a new array of half the size. Because the nature of this, the returned audio will be half of the original speed.
 
-### How Sound is Produced 
+## How Sound is Produced
 
 The application produces sound using the following formula:
 
